@@ -1,11 +1,41 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigationType } from 'react-router-dom'
+
+const scrollPositions = new Map()
+
 export default function ScrollManager() {
-  const { pathname, hash } = useLocation()
+  const location = useLocation()
+  const navigationType = useNavigationType()
+
   useEffect(() => {
-    const id = hash.replace('#', '')
-    const timer = window.setTimeout(() => id ? document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) : window.scrollTo({ top: 0, behavior: 'instant' }), 30)
+    const previousSetting = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+    return () => { window.history.scrollRestoration = previousSetting }
+  }, [])
+
+  useEffect(() => {
+    const savePosition = () => scrollPositions.set(location.key, window.scrollY)
+    window.addEventListener('scroll', savePosition, { passive: true })
+    return () => window.removeEventListener('scroll', savePosition)
+  }, [location.key])
+
+  useEffect(() => {
+    const { hash, key } = location
+    const timer = window.setTimeout(() => {
+      if (hash) {
+        document.getElementById(hash.slice(1))?.scrollIntoView({
+          behavior: navigationType === 'POP' ? 'auto' : 'smooth',
+          block: 'start',
+        })
+        return
+      }
+
+      const top = navigationType === 'POP' ? (scrollPositions.get(key) ?? 0) : 0
+      window.scrollTo({ top, behavior: 'auto' })
+    }, 60)
+
     return () => window.clearTimeout(timer)
-  }, [pathname, hash])
+  }, [location, navigationType])
+
   return null
 }

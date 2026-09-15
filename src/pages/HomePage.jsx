@@ -7,6 +7,6 @@ import Projects from '../sections/Projects.jsx'
 import Skills from '../sections/Skills.jsx'
 import useDocumentMeta from '../hooks/useDocumentMeta.js'
 export default function HomePage() {
-  useDocumentMeta('Sheshanathan S | Full-Stack Developer', 'Full-stack developer portfolio of Sheshanathan S, showcasing MERN stack projects, React, Node.js, Express, MongoDB, REST APIs and data analytics projects.')
+  useDocumentMeta('Sheshanathan S | Portfolio', 'Full-stack developer portfolio of Sheshanathan S, showcasing MERN stack projects, React, Node.js, Express, MongoDB, REST APIs and data analytics projects.')
   return <main id="main-content"><Hero /><About /><Skills /><Journey /><Projects /><Education /><Contact /></main>
 }

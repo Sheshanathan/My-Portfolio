@@ -1,6 +1,6 @@
 # Sheshanathan S — Developer Portfolio
 
-A modern, responsive portfolio for Sheshanathan S, focused on full-stack MERN development with data analytics as a complementary capability. The site includes a detailed project showcase, dedicated case-study routes, a visual full-stack workflow, project filters, contact validation, keyboard navigation and restrained motion.
+A modern, responsive portfolio for Sheshanathan S, focused on full-stack MERN development with data analytics as a complementary capability. The site includes a detailed project showcase, dedicated case-study routes, a visual full-stack workflow, project filters, contact validation, accessible navigation and restrained motion.
 
 ## Technology stack
 
@@ -35,8 +35,9 @@ The optimized output is written to `dist/`.
 
 ```text
 public/
-  project-images/        Project screenshots
-  resume/                Resume PDF
+  project-images/        Dashboard images sourced from project repositories
+  project-videos/        Optimized application walkthroughs
+  resume/                Downloadable resume PDF
 src/
   components/            Shared UI and interaction components
   context/               Toast notification state
@@ -58,51 +59,67 @@ All profile, navigation, skill, workflow, project, education, leadership and int
 This is also where you add:
 
 - GitHub and LinkedIn profile URLs in `personalInfo.social`
-- A resume path in `personalInfo.resumePath`
 - GitHub and demo URLs for each project
 - Project screenshot paths in each project's `image` field
 
-Empty URLs intentionally show an informative toast instead of sending visitors to invented or broken links.
+Optional buttons are rendered only when their URLs are configured, preventing visitors from seeing unfinished actions.
 
 ## Add project screenshots
 
 1. Export screenshots as optimized WebP, AVIF or compressed PNG files.
-2. Place them in `public/project-images/`.
+2. Create `public/project-images/` if needed and place them there.
 3. Set a project's `image` value, for example:
 
 ```js
 image: '/project-images/wcase-dashboard.webp'
 ```
 
-When `image` is empty, the site shows a styled, project-specific placeholder preview.
+WCase and elog use video walkthroughs. The two analytics projects use dashboard images sourced from their corresponding GitHub repositories.
 
-## Add the resume
+## Project videos
 
-1. Place the PDF in `public/resume/`, for example `public/resume/Sheshanathan-S-Resume.pdf`.
-2. Update the central data file:
+The WCase and elog walkthroughs are stored as optimized, video-only 720p MP4 files in `public/project-videos/`. Their paths are configured with each project's `video` field in `src/data/portfolioData.js`. Videos play silently while visible in project cards and expose native playback controls on project detail pages.
 
-```js
-resumePath: '/resume/Sheshanathan-S-Resume.pdf'
+## Resume
+
+The public resume is stored at `public/resume/Sheshanathan_S_Resume.pdf` and configured through `personalInfo.resumePath`. The navigation and hero resume actions download this file.
+
+## Contact form delivery
+
+The contact form validates input and sends submissions directly to `sheshumaya@gmail.com` through FormSubmit. It requires no account, API key, backend or environment variables. The form is already activated; submissions work locally and after deployment.
+
+The notification email contains the visitor's name, email address, subject and message. Replying to it uses the visitor's address through the configured Reply-To field.
+
+## Publish to GitHub
+
+Create a new empty repository on GitHub. Do not initialize it with another README, license or `.gitignore`. Then run these commands from this project folder:
+
+```bash
+npm ci
+npm audit
+npm run build
+git status
+git add -A
+git commit -m "Prepare portfolio for deployment"
+git branch -M main
+git remote add origin https://github.com/Sheshanathan/YOUR_REPOSITORY_NAME.git
+git push -u origin main
 ```
 
-The navigation and hero resume actions will then download the same file.
-
-## Contact form integration
-
-The form currently provides client-side validation and honest status messaging without sending data. The submission handler in `src/sections/Contact.jsx` can be connected to EmailJS, Formspree or a custom API. Keep validation in place and replace the final success notification only after the provider confirms delivery.
+Replace `YOUR_REPOSITORY_NAME` before running the remote command. Authenticate through GitHub; never paste an access token into source files or commit it.
 
 ## Deploy to Vercel
 
-1. Push the repository to GitHub, GitLab or Bitbucket.
-2. Import the repository in Vercel.
-3. Vercel should detect Vite automatically. If needed, use:
-   - Build command: `npm run build`
-   - Output directory: `dist`
-4. Deploy.
+1. Sign in to Vercel and choose **Add New → Project**.
+2. Import the GitHub repository created above.
+3. Confirm the framework preset is **Vite**.
+4. Use `npm run build` as the build command and `dist` as the output directory if Vercel does not detect them automatically.
+5. No environment variables are required.
+6. Deploy, then verify the homepage, all four `/projects/...` routes, both videos, mobile navigation and one contact submission.
 
-`vercel.json` includes the SPA rewrite needed for direct visits to project routes such as `/projects/wcase`.
+`vercel.json` preserves client-side routes and adds a restrictive Content Security Policy plus referrer, permissions, MIME-sniffing and frame-embedding protections.
 
-After deployment, add the production URL to the Open Graph metadata in `index.html` if you want an explicit canonical sharing URL. No social-preview image is included until you provide or generate a branded image.
+After deployment, add the permanent production URL as both `og:url` and the canonical link in `index.html`, then commit and push that SEO update. These values are intentionally omitted until the permanent URL is known. No social-preview image is included until you provide or generate a branded image.
 
 ## Available routes
 
@@ -120,3 +137,14 @@ After deployment, add the production URL to the Open Graph metadata in `index.ht
 - Responsive layouts for mobile, tablet and desktop
 - Lazy-loaded route bundles
 - No external font or image requests in the base version
+
+## Security and privacy
+
+- The repository contains no API credentials, database URLs, private keys or environment variables.
+- Local environment files, Vercel linkage data, prior Sites linkage data, logs, private-key formats, dependencies and build output are excluded by `.gitignore`.
+- Everything placed in `public/` is downloadable by site visitors. Keep secrets, private datasets, credentials and unredacted personal records out of that directory.
+- The portfolio email, LinkedIn URL and GitHub URL are intentionally public contact information.
+- The contact form validates in the browser before making a real submission request.
+- Contact submissions are sent to FormSubmit over HTTPS; the Content Security Policy allows only that specific external form domain.
+- No API keys, account credentials or email passwords are stored in the project.
+- Re-run `npm audit` and `npm run build` before each production release.

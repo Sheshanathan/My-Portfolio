@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import CommandPalette from './components/CommandPalette.jsx'
 import Toast from './components/Toast.jsx'
 import ScrollManager from './components/ScrollManager.jsx'
 import { ToastProvider, useToast } from './context/ToastContext.jsx'
@@ -26,7 +25,6 @@ function AppContent() {
         </Routes>
       </Suspense>
       <Footer />
-      <CommandPalette />
       <Toast toast={toast} />
     </div>
   )
