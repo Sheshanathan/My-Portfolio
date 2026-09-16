@@ -10,7 +10,7 @@ export default function ProjectPage() {
   const { slug } = useParams()
   const projectIndex = projects.findIndex((item) => item.slug === slug)
   const project = projects[projectIndex]
-  useDocumentMeta(project ? `${project.name} | Sheshanathan S` : 'Project not found | Sheshanathan S', project ? project.description : 'The requested project case study could not be found.')
+  useDocumentMeta(project ? `${project.name} | Sheshanathan S` : 'Project not found | Sheshanathan S', project ? project.description : 'The requested project case study could not be found.', !project)
   if (!project) return <main id="main-content" className="not-found"><p>Page not found</p><h1>That case study doesn&apos;t exist.</h1><Link className="button primary" to="/#projects"><ArrowLeft size={17}/> Back to projects</Link></main>
 
   const next = projects[(projectIndex + 1) % projects.length]
@@ -27,6 +27,7 @@ export default function ProjectPage() {
           <SocialAction className="button secondary" url={project.github} label={`${project.name} GitHub`}><Github size={17}/> GitHub</SocialAction>
           {project.demo && <SocialAction className="button secondary" url={project.demo} label={`${project.name} live demo`}><ExternalLink size={17}/> Live demo</SocialAction>}
         </div>
+        {project.demoNote && <p className="demo-note">{project.demoNote}</p>}
       </header>
       <ProjectVisual project={project} large />
       <div className="case-study-grid">

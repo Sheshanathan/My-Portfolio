@@ -44,7 +44,7 @@ export const workflowSkills = ['Frontend Development', 'REST API Development', '
 export const projects = [
   {
     slug: 'wcase', order: '01', name: 'WCase', subtitle: 'Creator Portfolio & Publishing Platform', category: 'Full Stack', featured: true,
-    technology: ['React 19', 'Vite 8', 'Tailwind CSS 4', 'Express 5', 'MongoDB', 'Cloudinary'],
+    technology: ['React', 'Vite', 'Tailwind CSS', 'Express', 'MongoDB', 'Cloudinary'],
     description: 'A creator publishing product that turns uploaded image and video work into a shareable public portfolio, with one private workspace for content and engagement.',
     overview: 'WCase serves two connected experiences. Creators register through email OTP, build a profile, upload image or video projects, organise their work and publish a portfolio at a unique public slug. Visitors can browse published work without an account, open media, like and share projects, and send an enquiry. Views, likes and enquiries return to the creator dashboard.',
     headings: {
@@ -59,11 +59,11 @@ export const projects = [
     engineering: 'The API is the source of truth for ownership and publication state. Upload middleware validates media type and size, media routes check who may view each asset, sensitive operations receive dedicated rate limits, and exact-origin CORS and response security headers narrow the production trust boundary.',
     architecture: ['React 19, Vite 8 and React Router 7 client', 'Express 5 REST API', 'JWT, bcrypt, OTP and Brevo email services', 'Mongoose domain models in MongoDB', 'Cloudinary storage with signed production delivery'],
     implementation: ['Protected creator routes alongside intentionally public portfolio routes', 'Server-side checks for media type, size, ownership and publication status', 'Dedicated limits for authentication, uploads, enquiries, reports and view events', 'Backend tests for HTTP safety, validation, media access and engagement analytics'],
-    github: 'https://github.com/Sheshanathan/wcase-portfolio-platform', demo: 'https://wcase-portfolio-platform.vercel.app/', image: '', video: '/project-videos/wcase-showcase.mp4',
+    github: 'https://github.com/Sheshanathan/wcase-portfolio-platform', demo: 'https://wcase-portfolio-platform.vercel.app/', image: '', poster: '/project-images/wcase-video-poster.jpg', video: '/project-videos/wcase-showcase.mp4',
   },
   {
     slug: 'elog', order: '02', name: 'elog', subtitle: 'Workforce Operations System', category: 'Full Stack', featured: true,
-    technology: ['React 19', 'Vite 8', 'React Router 7', 'Express 5', 'MongoDB', 'JWT'],
+    technology: ['React', 'Vite', 'React Router', 'Express', 'MongoDB', 'JWT'],
     description: 'A single-organisation workforce system with distinct admin and employee experiences for records, attendance, leave and account access.',
     overview: 'elog gives administrators an operational view of their organisation and employees a focused self-service area. Admins manage employee records, departments, designations and user accounts; import or export employees; maintain attendance; review correction requests; and process leave. Employees manage their profile, check in and out, submit the working day, review attendance, request corrections and track leave balances and decisions.',
     headings: {
@@ -78,7 +78,8 @@ export const projects = [
     engineering: 'elog intentionally has no public registration route: administrators create and link employee accounts, and the first administrator is created through a controlled setup. The frontend is deployed on Vercel, the API runs on Render, MongoDB Atlas stores application data, and password-reset email uses the Brevo HTTPS API because the hosting environment blocks outbound SMTP.',
     architecture: ['React 19, Vite 8 and React Router 7 client', 'Authentication context and role-aware route guards', 'Express 5 domain routes, controllers and middleware', 'Mongoose models in MongoDB Atlas', 'Render API and Brevo transactional email'],
     implementation: ['Backend auth and admin middleware enforce permissions independently of the UI', 'Reusable attendance helpers calculate check-in, check-out and working hours', 'CSV workflows, linked department and designation records, and audit logging', 'Swagger documentation in development plus notification and correction workflows'],
-    github: 'https://github.com/Sheshanathan/elog-employee-management-system', demo: 'https://elog-employee-management-system.vercel.app/', image: '', video: '/project-videos/elog-showcase.mp4',
+    demoNote: 'elog uses controlled account creation and does not expose public registration. The walkthrough below shows both role-specific experiences.',
+    github: 'https://github.com/Sheshanathan/elog-employee-management-system', demo: 'https://elog-employee-management-system.vercel.app/', image: '', poster: '/project-images/elog-video-poster.jpg', video: '/project-videos/elog-showcase.mp4',
   },
   {
     slug: 'customer-churn', order: '03', name: 'Customer Churn Analysis', subtitle: 'Telecom Retention Insights', category: 'Data Analytics', featured: false,

@@ -4,8 +4,9 @@ import Reveal from '../components/Reveal.jsx'
 import SocialAction from '../components/SocialAction.jsx'
 import { personalInfo } from '../data/portfolioData.js'
 import { useToast } from '../context/ToastContext.jsx'
+import { CONTACT_LIMITS, validateContact } from '../utils/contactValidation.js'
 
-const initialForm = { name: '', email: '', subject: '', message: '' }
+const initialForm = { name: '', email: '', subject: '', message: '', website: '' }
 const contactEndpoint = `https://formsubmit.co/ajax/${personalInfo.email}`
 
 export default function Contact() {
@@ -26,18 +27,15 @@ export default function Contact() {
     setErrors((current) => ({ ...current, [event.target.name]: '' }))
   }
 
-  const validate = () => {
-    const next = {}
-    if (form.name.trim().length < 2) next.name = 'Please enter your name.'
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) next.email = 'Please enter a valid email address.'
-    if (form.subject.trim().length < 3) next.subject = 'Please add a short subject.'
-    if (form.message.trim().length < 12) next.message = 'Please share a little more detail (12+ characters).'
-    return next
-  }
-
   const submit = async (event) => {
     event.preventDefault()
-    const next = validate()
+    if (form.website) {
+      setForm(initialForm)
+      notify('Message sent successfully. Thank you for reaching out.', 'success')
+      return
+    }
+
+    const next = validateContact(form)
     setErrors(next)
     if (Object.keys(next).length) {
       notify('Please review the highlighted fields.', 'error')
@@ -55,6 +53,8 @@ export default function Contact() {
           _replyto: form.email.trim(),
           subject: form.subject.trim(),
           message: form.message.trim(),
+          _honey: form.website,
+          _captcha: 'false',
           _subject: `Portfolio enquiry from ${form.name.trim()}: ${form.subject.trim()}`,
           _template: 'box',
           _url: window.location.href,
@@ -111,16 +111,18 @@ export default function Contact() {
         <Reveal className="contact-form-wrap" delay={.1}>
           <form className="contact-form" onSubmit={submit} noValidate>
             <div className="form-heading"><span>Send a message</span></div>
+            <label className="honeypot" aria-hidden="true">Leave this field empty<input name="website" value={form.website} onChange={update} tabIndex="-1" autoComplete="off" /></label>
             <div className="form-row">
-              <label>Name<input name="name" value={form.name} onChange={update} autoComplete="name" maxLength="80" aria-invalid={Boolean(errors.name)} aria-describedby="name-error" placeholder="Your name" /></label>
-              <label>Email<input name="email" type="email" value={form.email} onChange={update} autoComplete="email" maxLength="254" aria-invalid={Boolean(errors.email)} aria-describedby="email-error" placeholder="you@company.com" /></label>
+              <label>Name<input name="name" value={form.name} onChange={update} autoComplete="name" maxLength={CONTACT_LIMITS.name} aria-invalid={Boolean(errors.name)} aria-describedby="name-error" placeholder="Your name" /></label>
+              <label>Email<input name="email" type="email" value={form.email} onChange={update} autoComplete="email" maxLength={CONTACT_LIMITS.email} aria-invalid={Boolean(errors.email)} aria-describedby="email-error" placeholder="you@company.com" /></label>
             </div>
             <div className="form-errors"><span id="name-error">{errors.name}</span><span id="email-error">{errors.email}</span></div>
-            <label>Subject<input name="subject" value={form.subject} onChange={update} maxLength="120" aria-invalid={Boolean(errors.subject)} aria-describedby="subject-error" placeholder="Opportunity, project or hello" /></label>
+            <label>Subject<input name="subject" value={form.subject} onChange={update} maxLength={CONTACT_LIMITS.subject} aria-invalid={Boolean(errors.subject)} aria-describedby="subject-error" placeholder="Opportunity, project or hello" /></label>
             <span className="field-error" id="subject-error">{errors.subject}</span>
-            <label>Message<textarea name="message" value={form.message} onChange={update} rows="5" minLength="12" maxLength="2000" aria-invalid={Boolean(errors.message) || messageTooShort} aria-describedby="message-feedback" placeholder="Tell me a little about what you have in mind…" /></label>
-            <span className={`message-feedback ${errors.message || messageTooShort ? 'is-error' : ''}`} id="message-feedback">{messageFeedback}</span>
+            <label>Message<textarea name="message" value={form.message} onChange={update} rows="5" minLength="12" maxLength={CONTACT_LIMITS.message} aria-invalid={Boolean(errors.message) || messageTooShort} aria-describedby="message-feedback" placeholder="Tell me a little about what you have in mind…" /></label>
+            <span className={`message-feedback ${errors.message || messageTooShort ? 'is-error' : ''}`} id="message-feedback" aria-live="polite">{messageFeedback}</span>
             <button className="button primary submit-button" type="submit" disabled={submitting} aria-busy={submitting}>{submitting ? 'Sending…' : 'Send message'} <Send size={17}/></button>
+            <p className="form-privacy">Your details are used only to respond to this enquiry and are processed by <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>.</p>
           </form>
         </Reveal>
       </div>
