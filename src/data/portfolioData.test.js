@@ -20,7 +20,10 @@ describe('portfolio data', () => {
   it('provides usable media for every project', () => {
     projects.forEach((project) => {
       expect(Boolean(project.image || project.video)).toBe(true)
-      if (project.video) expect(project.poster).toMatch(/^\/project-images\//)
+      if (project.video) {
+        expect(project.poster).toMatch(/^\/project-images\//)
+        expect(project.thumbnail).toMatch(/^\/project-images\//)
+      }
     })
   })
 

@@ -59,7 +59,7 @@ export const projects = [
     engineering: 'The API is the source of truth for ownership and publication state. Upload middleware validates media type and size, media routes check who may view each asset, sensitive operations receive dedicated rate limits, and exact-origin CORS and response security headers narrow the production trust boundary.',
     architecture: ['React 19, Vite 8 and React Router 7 client', 'Express 5 REST API', 'JWT, bcrypt, OTP and Brevo email services', 'Mongoose domain models in MongoDB', 'Cloudinary storage with signed production delivery'],
     implementation: ['Protected creator routes alongside intentionally public portfolio routes', 'Server-side checks for media type, size, ownership and publication status', 'Dedicated limits for authentication, uploads, enquiries, reports and view events', 'Backend tests for HTTP safety, validation, media access and engagement analytics'],
-    github: 'https://github.com/Sheshanathan/wcase-portfolio-platform', demo: 'https://wcase-portfolio-platform.vercel.app/', image: '', poster: '/project-images/wcase-video-poster.jpg', video: '/project-videos/wcase-showcase.mp4',
+    github: 'https://github.com/Sheshanathan/wcase-portfolio-platform', demo: 'https://wcase-portfolio-platform.vercel.app/', image: '', thumbnail: '/project-images/wcase-thumbnail.png', poster: '/project-images/wcase-video-poster.jpg', video: '/project-videos/wcase-showcase.mp4',
   },
   {
     slug: 'elog', order: '02', name: 'elog', subtitle: 'Workforce Operations System', category: 'Full Stack', featured: true,
@@ -79,7 +79,7 @@ export const projects = [
     architecture: ['React 19, Vite 8 and React Router 7 client', 'Authentication context and role-aware route guards', 'Express 5 domain routes, controllers and middleware', 'Mongoose models in MongoDB Atlas', 'Render API and Brevo transactional email'],
     implementation: ['Backend auth and admin middleware enforce permissions independently of the UI', 'Reusable attendance helpers calculate check-in, check-out and working hours', 'CSV workflows, linked department and designation records, and audit logging', 'Swagger documentation in development plus notification and correction workflows'],
     demoNote: 'elog uses controlled account creation and does not expose public registration. The walkthrough below shows both role-specific experiences.',
-    github: 'https://github.com/Sheshanathan/elog-employee-management-system', demo: 'https://elog-employee-management-system.vercel.app/', image: '', poster: '/project-images/elog-video-poster.jpg', video: '/project-videos/elog-showcase.mp4',
+    github: 'https://github.com/Sheshanathan/elog-employee-management-system', demo: 'https://elog-employee-management-system.vercel.app/', image: '', thumbnail: '/project-images/elog-thumbnail.png', poster: '/project-images/elog-video-poster.jpg', video: '/project-videos/elog-showcase.mp4',
   },
   {
     slug: 'customer-churn', order: '03', name: 'Customer Churn Analysis', subtitle: 'Telecom Retention Insights', category: 'Data Analytics', featured: false,

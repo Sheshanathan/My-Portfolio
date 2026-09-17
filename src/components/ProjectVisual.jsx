@@ -15,7 +15,7 @@ function ProjectPoster({ project }) {
   return (
     <div className="project-visual video-visual video-poster-visual">
       <div className="visual-bar"><span><i /><i /><i /></span><small>{project.slug}.demo</small><b>{project.order}</b></div>
-      <img className="project-video-poster" src={project.poster} alt={`${project.name} application walkthrough preview`} loading="lazy" />
+      <img className="project-video-poster" src={project.thumbnail || project.poster} alt={`${project.name} application homepage preview`} loading="lazy" />
       <span className="video-caption">Full walkthrough in case study</span>
     </div>
   )
